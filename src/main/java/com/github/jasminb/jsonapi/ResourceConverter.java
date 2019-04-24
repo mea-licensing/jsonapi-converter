@@ -196,6 +196,11 @@ public class ResourceConverter {
 			// Parse data node without handling relationships
 			T resourceObject;
 			boolean cached = false;
+
+            if (dataNode != null && dataNode.isArray() && dataNode.size() == 1) {
+                dataNode = dataNode.get(0);
+            }
+
 			if (dataNode != null && dataNode.isObject()) {
 				String identifier = createIdentifier(dataNode);
 				cached = identifier != null && resourceCache.contains(identifier);
