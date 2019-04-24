@@ -649,7 +649,7 @@ public class ResourceConverter {
 	 */
 	private boolean isCollection(JsonNode source) {
 		JsonNode data = source.get(DATA);
-		return data != null && data.isArray();
+		return data != null && data.isArray() && data.length() > 1;
 	}
 
 
