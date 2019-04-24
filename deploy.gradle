@@ -1,0 +1,36 @@
+apply plugin: 'com.jfrog.artifactory'
+apply plugin: 'maven-publish'
+
+def libraryGroupId = 'com.meamobile'
+def libraryArtifactId = 'jsonapi-converter'
+def libraryVersion = '1.0.0'
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            group = libraryGroupId
+            version = libraryVersion
+            description = libraryArtifactId
+            sourceCompatibility = '1.8'
+
+            from(components.java)
+        }
+    }
+}
+
+artifactory {
+    contextUrl = 'http://androidrepo.we-are-mea.com/artifactory'
+    publish {
+        repository {
+            repoKey = 'libs-release-local'
+
+            username = ARTIFACTORY_USERNAME
+            password = ARTIFACTORY_PASSWORD
+        }
+        defaults {
+            publications('mavenJava')
+            publishArtifacts = true
+            publishPom = true
+        }
+    }
+}
