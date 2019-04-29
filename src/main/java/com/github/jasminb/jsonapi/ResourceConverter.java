@@ -530,7 +530,11 @@ public class ResourceConverter {
 							relationshipField.set(object, elements);
 						} else {
 							try {
-							Object relationshipObject = parseRelationship(relationship.get(DATA), type);
+								JsonNode dataNode = relationship.get(DATA);
+								if (dataNode.isArray() && dataNode.size() == 1) {
+									dataNode = dataNode.get(0);
+								}
+								Object relationshipObject = parseRelationship(dataNode, type);
 								if (relationshipObject != null) {
 									relationshipField.set(object, relationshipObject);
 								}
